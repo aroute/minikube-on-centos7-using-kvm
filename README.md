@@ -1,6 +1,6 @@
 # minikube-on-centos7-using-kvm
 
-QEMU: https://access.redhat.com/articles/1344173#Q_how-install-virtualization-packages
+### KVM
 ```
 sudo su -
 yum install qemu-kvm libvirt libvirt-python libguestfs-tools virt-install -y
@@ -9,9 +9,6 @@ systemctl start libvirtd.service && systemctl enable libvirtd.service
 ```
 exit
 ```
-
-QEMU group: https://computingforgeeks.com/use-virt-manager-as-non-root-user/
-
 Check ---
 ```
 sudo getent group | grep libvirt
