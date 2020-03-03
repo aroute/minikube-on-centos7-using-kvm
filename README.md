@@ -1,6 +1,10 @@
 # minikube-on-centos7-using-kvm
 
 ### KVM
+Check ...
+```
+egrep -q 'vmx|svm' /proc/cpuinfo && echo yes || echo no
+```
 ```
 sudo su -
 yum install qemu-kvm libvirt libvirt-python libguestfs-tools virt-install -y
@@ -25,9 +29,8 @@ id $(whoami)
 Restart --
 ```
 sudo systemctl restart libvirtd.service
-egrep -q 'vmx|svm' /proc/cpuinfo && echo yes || echo no
 ```
-KUBECTL:
+### Kubectl:
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
@@ -36,7 +39,7 @@ Check--
 ```
 kubectl version --client
 ```
-MINIKUBE: 
+### Minikube: 
 ```
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
    && sudo install minikube-linux-amd64 /usr/local/bin/minikube
@@ -67,8 +70,8 @@ minikube service hello-minikube
 minikube addons enable helm-tiller
 ```
 ```
-curl -LO https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz
-tar -zxvf helm-v2.16.3-linux-amd64.tar.gz
+curl -LO https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz
+tar -zxvf helm-v2.16.1-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin/
 ```
 ### Test Jenkins
@@ -78,24 +81,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: jenkins
-EOF
-```
-```
-cat <<EOF | kubectl create -f -
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jenkins-volume
-  namespace: jenkins
-spec:
-  storageClassName: jenkins-volume
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 10Gi
-  persistentVolumeReclaimPolicy: Retain
-  hostPath:
-    path: /data/jenkins/
 EOF
 ```
 ```yaml
