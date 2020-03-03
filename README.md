@@ -129,3 +129,33 @@ printf $(kubectl get secret --namespace jenkins jenkins -o jsonpath="{.data.jenk
 ```
 minikube --namespace=jenkins service jenkins
 ```
+### Test Jenkins
+
+1. Log in to the Jenkins dashboard.
+2. Navigate to Credentials > System > Global Credentials > Add Credentials.
+3. Add a Kubernetes Service Account credential, setting the value of the ID field to jenkins.
+4. Save and navigate to Jenkins > Manage Jenkins > System.
+5. Under the Kubernetes section, configure the credentials to those you created in step 3 and click Save.
+
+Run a simple build to make sure everything’s working. From the dashboard, navigate to New Item in the left-hand column.
+
+Create a new pipeline job named “demo-job” . Click OK to move to the next page and configure that job with the following script in the Pipeline Script field.
+
+Click Save, then, on the following page, click Build Now. This will execute the job.
+
+```
+podTemplate(label: 'build', containers: [
+    containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true)
+  ],
+  volumes: [
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+  ]
+  ) {
+    node('build') {
+      container('docker') {
+        sh 'docker version'
+      }        
+    }  
+  }
+
+```
