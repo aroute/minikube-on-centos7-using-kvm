@@ -57,7 +57,18 @@ minikube status
 kubectl version
 kubectl get pods -A
 ```
+### Minikube Test
+```
+minikube dashboard
+kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+kubectl get pods
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
+minikube service hello-minikube
+```
 ### Helm
+```
+minikube addons enable helm-tiller
+```
 ```
 curl -LO https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz
 tar -zxvf helm-v2.16.3-linux-amd64.tar.gz
