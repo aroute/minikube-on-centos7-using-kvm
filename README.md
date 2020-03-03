@@ -57,6 +57,12 @@ minikube status
 kubectl version
 kubectl get pods -A
 ```
+### Helm
+```
+curl -LO https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz
+tar -zxvf helm-v2.16.3-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/
+```
 ### Test Jenkins
 ```
 cat <<EOF | kubectl create -f -
